@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_KEY,
+    apiKey: import.meta.env.VITE_FIREBASE_API,
     authDomain: "countries-f2546.firebaseapp.com",
     projectId: "countries-f2546",
     storageBucket: "countries-f2546.appspot.com",
@@ -17,3 +17,34 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 const db = getFirestore(app)
 
+const registerWithEmailAndPassword = async (name, email, password) => {
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email, password)
+        const user = response.user;
+        await addDoc(collection(db, 'users'), {
+            uid: user.uid,
+            name,
+            authProvider: "local",
+            email,
+        })
+    }
+    catch (err) {
+        console.error(err)
+        alert(err.message)
+    }
+};
+export const loginWithEmailAndPassword = async (email, password) => {
+    try {
+        await signInWithEmailAndPassword(auth, email, password)
+    }
+    catch (err) {
+        console.error(err)
+        alert(err.message)
+    }
+}
+
+export const logout = () => {
+    auth.signOut()
+}
+
+export { registerWithEmailAndPassword, auth, db }

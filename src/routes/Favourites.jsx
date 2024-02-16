@@ -10,7 +10,7 @@ import { initializeCountries } from "../store/countriesSlice";
 const Favourites = () => {
     const dispatch = useDispatch();
 
-    const favourites = useSelector((state) => state.countries.countries);
+    const favourites = useSelector((state) => state.favourites.favourites);
 
     useEffect(() => {
         dispatch(initializeCountries());

@@ -7,7 +7,9 @@ export const favouritesSlice = createSlice({
     },
     reducers: {
         addFavourite(state, action) {
-            if (state.favourites.some(favourite => favourite.name.common === action.payload.name.common)) {
+            if (
+                state.favourites.some(
+                    (favourite) => favourite.name.common === action.payload.name.common)) {
                 return;
             } else {
                 state.favourites = [...state.favourites, action.payload];

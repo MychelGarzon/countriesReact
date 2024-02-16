@@ -7,7 +7,7 @@ export default configureStore({
 
     reducer: {
         countries: countriesReducer,
-        favoutites: favouritesReducer,
+        favourites: favouritesReducer,
     },
 });
 
