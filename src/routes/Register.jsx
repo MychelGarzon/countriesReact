@@ -1,37 +1,51 @@
-import { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, registerWithEmailAndPassword } from '../auth/firebase';
-import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, registerWithEmailAndPassword } from "../auth/firebase";
 
 const Register = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
     const register = () => {
-        if (!name) alert('Please enter your name');
-        registerWithEmailAndPassword(email, password, name)
+        if (!name) alert("Please enter your name");
+        registerWithEmailAndPassword(name, email, password);
+    };
 
-    }
     useEffect(() => {
         if (loading) return;
-        if (user) console.log(user)
-        if (user)
-            navigate('/countries')
-
+        if (user) console.log("User Info:", user);
+        if (user) navigate("/countries");
     }, [user, loading]);
+
     return (
         <div>
             <h1>Register</h1>
-            <input type="text" value={name} placeholder='Full Name' onChange={(e) => setName(e.target.value)} />
-            <input type="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
+            <input
+                type="text"
+                value={name}
+                placeholder="Full Name"
+                onChange={(e) => setName(e.target.value)}
+            />
+            <input
+                type="text"
+                value={email}
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+                type="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+            />
             <Button onClick={register}>Register</Button>
         </div>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;

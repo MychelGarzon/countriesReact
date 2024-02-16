@@ -7,37 +7,63 @@ import { Link } from "react-router-dom";
 import { logout } from "../auth/firebase";
 
 const Header = () => {
-  return (
-    <Container fluid>
-      <Row>
-        <Navbar bg="light" variant="light">
-          <Container className="justify-content-end">
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav>
-                <Link to="/">
-                  <Button variant="contained">Home</Button>
-                </Link>
-                <Link to="/countries">
-                  <Button variant="contained">Countries</Button>
-                </Link>
-                <Link to="/favourites">
-                  <Button variant="contained">Favourites</Button>
-                </Link>
-                <Link to="/register">
-                  <Button variant="contained">Register</Button>
-                </Link>
-                <Link to="/login">
-                  <Button variant="contained">Login</Button>
-                </Link>
-                <Button variant="contained" onClick={logout}>Logout</Button>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </Row>
-    </Container>
-  );
+  if (window.location.pathname !== "/login" || window.location.pathname === "/register") {
+    return (
+      <Container fluid>
+        <Row>
+          <Navbar bg="light" variant="light">
+            <Container className="justify-content-end">
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                  <Link to="/register">
+                    <Button variant="contained">Register</Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button variant="contained">Login</Button>
+                  </Link>
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+        </Row>
+      </Container>
+
+    );
+  }
+  else {
+    return (
+      <Container fluid>
+        <Row>
+          <Navbar bg="light" variant="light">
+            <Container className="justify-content-end">
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                  <Link to="/">
+                    <Button variant="contained">Home</Button>
+                  </Link>
+                  <Link to="/countries">
+                    <Button variant="contained">Countries</Button>
+                  </Link>
+                  <Link to="/favourites">
+                    <Button variant="contained">Favourites</Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="contained">Register</Button>
+                  </Link>
+                  <Link to="/login">
+                    <Button variant="contained">Login</Button>
+                  </Link>
+                  <Button variant="contained" onClick={logout}>Logout</Button>
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
+        </Row>
+      </Container>
+    );
+  }
 };
 
 export default Header;
