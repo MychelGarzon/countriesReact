@@ -3,10 +3,9 @@ import { Navigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
 import { Col, Spinner } from "react-bootstrap";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ component: Component }) => {
     const [user, loading, error] = useAuthState(auth);
     console.log("user: ", user);
-    console.log("children: ", children);
 
     if (loading) {
         return <Col className="text-center m-5">
@@ -15,8 +14,9 @@ const ProtectedRoute = ({ children }) => {
             </Spinner>
         </Col>;
     }
-    // If the user is logged in, return the children
-    return user ? children :
+
+    return user ?
+        <Component /> :
 
         <Navigate to="/login" replace />;
 };
