@@ -24,7 +24,6 @@ const Countries = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("search: ", search);
   }, [search]);
 
   if (loading) {

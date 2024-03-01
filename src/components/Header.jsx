@@ -4,11 +4,31 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
-import { auth, logout } from "../auth/firebase";
+import { auth, db, logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Header = () => {
   const [user, error] = useAuthState(auth);
+
+  const [name, setName] = useState(null);
+
+  useEffect(() => {
+    const getUserData = async () => {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setName(doc.data().name);
+      });
+    };
+
+    if (user) {
+      getUserData();
+    }
+  }, [user]);
+
+  console.log("user", user);
 
   if (!user) {
     return (
@@ -19,7 +39,7 @@ const Header = () => {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
-                  <Link to="/home">
+                  <Link to="/">
                     <Button variant="contained">Home</Button>
                   </Link>
                   <Link to="/register" >
@@ -54,13 +74,18 @@ const Header = () => {
                   <Link to="/favourites">
                     <Button variant="contained">Favourites</Button>
                   </Link>
-                  <Button variant="contained" onClick={logout}>Logout</Button>
+                  <Button variant="primary" onClick={logout}>Logout</Button>
+
+                  <Navbar.Text>{name}</Navbar.Text>
+
+
                 </Nav>
+
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Row>
-      </Container>
+      </Container >
     );
   }
 }
