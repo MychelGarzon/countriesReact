@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 
+
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API,
     authDomain: "countries-f2546.firebaseapp.com",

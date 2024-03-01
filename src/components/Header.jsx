@@ -19,13 +19,16 @@ const Header = () => {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
-                  <Link to="/register">
-                    <Button variant="contained">Register</Button>
+                  <Link to="/countries">
+                    <Button variant="contained">Home</Button>
+                  </Link>
+                  <Link to="/favourites">
+                    <Button variant="contained">Favourites</Button>
                   </Link>
                   <Link to="/login">
                     <Button variant="contained">Login</Button>
                   </Link>
-                  <Button variant="contained" onClick={logout}>Logout</Button>
+                  <Button variant="primary" onClick={logout}>Logout</Button>
                 </Nav>
               </Navbar.Collapse>
             </Container>
