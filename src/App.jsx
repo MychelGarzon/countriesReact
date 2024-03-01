@@ -53,6 +53,7 @@ function App() {
                     <CountriesSingle component={CountriesSingle} />
                   }
                 />
+
               </Route>
             </Routes>
           </Router>
@@ -61,10 +62,5 @@ function App() {
     </Provider>
   );
 }
-
-/*<Route
-path="/countries"
-element={<ProtectedRoute component={Countries} />}
-/>*/
 
 export default App;

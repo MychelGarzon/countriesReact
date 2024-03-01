@@ -6,6 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../store/countriesSlice";
+import { clearAllFavourite, removeFavourite } from "../store/favouritesSlice";
 
 const Favourites = () => {
     const dispatch = useDispatch();
@@ -59,6 +60,19 @@ const Favourites = () => {
                                         {country.population.toLocaleString()}
                                     </ListGroup.Item>
                                 </ListGroup>
+                                <button
+                                    onClick={() => dispatch(removeFavourite(country))}
+                                    className="btn btn-danger mt-2"
+                                >
+                                    Remove
+                                </button>
+
+                                <button
+                                    onClick={() => dispatch(clearAllFavourite(country))}
+                                    className="btn btn-danger mt-2"
+                                >Remove All
+                                </button>
+
                             </Card.Body>
                         </Card>
                     </Col>

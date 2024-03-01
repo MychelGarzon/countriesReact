@@ -16,8 +16,11 @@ const ProtectedRoute = ({ children }) => {
         </Col>;
     }
     // If the user is logged in, return the children
-    return user ? children : <Navigate to="/login" replace />;
+    return user ? children :
+
+        <Navigate to="/login" replace />;
 };
 
-export default ProtectedRoute;
 
+
+export default ProtectedRoute;
