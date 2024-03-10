@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Form, Spinner } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -9,22 +10,24 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getFavouritesFromSource } from "../auth/firebase";
 import { initializeCountries } from "../store/countriesSlice";
-import { addFavourite } from "../store/favouritesSlice";
+import { addFavourite, removeFavourite } from "../store/favouritesSlice";
 
 const Countries = () => {
   const dispatch = useDispatch();
 
   const countriesList = useSelector((state) => state.countries.countries);
+  const favourites = useSelector((state) => state.favourites.favourites);
   const loading = useSelector((state) => state.countries.isLoading);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
   }, [dispatch]);
 
-  useEffect(() => {
-  }, [search]);
+  useEffect(() => { }, [search]);
 
   if (loading) {
     return (
@@ -42,6 +45,7 @@ const Countries = () => {
   }
 
   return (
+
     <Container fluid>
       <Row>
         <Form.Control
@@ -61,9 +65,19 @@ const Countries = () => {
           .map((country) => (
             <Col className="mt-5" key={country.name.common}>
               <Card className="h-100">
-                <FavoriteIcon
-                  onClick={() => dispatch(addFavourite(country))}
-                ></FavoriteIcon>
+                {favourites.some(
+                  (favourite) => favourite === country.name?.common
+                ) ? (
+                  <FavoriteBorderIcon
+                    onClick={() =>
+                      dispatch(removeFavourite(country.name.common))
+                    }
+                  />
+                ) : (
+                  <FavoriteIcon
+                    onClick={() => dispatch(addFavourite(country.name.common))}
+                  />
+                )}
                 <Link
                   to={`/countries/${country.name.common}`}
                   state={{ country: country }}
@@ -90,23 +104,20 @@ const Countries = () => {
                   >
                     <ListGroup.Item>
                       <i className="bi bi-translate me-2"></i>
-                      {"Languages: " + Object.values(country.languages ?? {}).join(", ")}
+                      {Object.values(country.languages ?? {}).join(", ")}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <i className="bi bi-cash-coin me-2"></i>
-                      {"Currency: " + Object.values(country.currencies || {})
+                      {Object.values(country.currencies || {})
                         .map((currency) => currency.name)
                         .join(", ")}
                     </ListGroup.Item>
                     <ListGroup.Item>
                       <i className="bi bi-people me-2"></i>
-                      {"Population: " + country.population.toLocaleString()}
-
+                      {country.population.toLocaleString()}
                     </ListGroup.Item>
                   </ListGroup>
-
                 </Card.Body>
-
               </Card>
             </Col>
           ))}

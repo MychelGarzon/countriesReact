@@ -11,7 +11,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 
 
 const Header = () => {
-  const [user, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const [name, setName] = useState(null);
 
@@ -66,9 +66,7 @@ const Header = () => {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
-                  <Link to="/">
-                    <Button variant="contained">Home</Button>
-                  </Link>
+
                   <Link to="/countries">
                     <Button variant="contained">Countries</Button>
                   </Link>

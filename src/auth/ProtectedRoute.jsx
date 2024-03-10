@@ -3,8 +3,8 @@ import { Navigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
 import { Col, Spinner } from "react-bootstrap";
 
-const ProtectedRoute = ({ component: Component }) => {
-    const [user, loading, error] = useAuthState(auth);
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+    const [user, loading] = useAuthState(auth);
     console.log("user: ", user);
 
     if (loading) {
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ component: Component }) => {
     }
 
     return user ?
-        <Component /> :
+        <Component {...rest} /> :
 
         <Navigate to="/login" replace />;
 };

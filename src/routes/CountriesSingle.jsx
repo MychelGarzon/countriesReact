@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
 
 const CountriesSingle = () => {
@@ -11,6 +11,7 @@ const CountriesSingle = () => {
   const [weather, setWeather] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [neighbors, setNeighbors] = useState([]);
 
   console.log("country", country);
 
@@ -28,7 +29,28 @@ const CountriesSingle = () => {
         setWeather(res.data);
         setLoading(false);
       });
-  }, [country.capital]);
+  }
+    , [country.capital]);
+  useEffect(() => {
+    const fetchNeighbors = async () => {
+      if (country?.borders?.length) {
+        try {
+          const response = await axios.get(
+            `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(",")}`
+          );
+          const countries = response.data;
+          setNeighbors(
+            countries.map((neighbor) => neighbor.name.common)
+          );
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchNeighbors();
+  }, [country?.borders]);
+
 
   console.log("weather", weather);
   if (loading) {
@@ -56,6 +78,8 @@ const CountriesSingle = () => {
             thumbnail
             src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
           />
+          <Image src={country.flags.png} />
+
         </Col>
         <Col>
           <h2 className="display-4">{country.name.common}</h2>
@@ -71,6 +95,19 @@ const CountriesSingle = () => {
                 src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                 alt={weather.weather[0].description}
               />
+            </div>
+          )}
+          {neighbors.length > 0 && (
+            <div>
+              <h3>Bordering Countries</h3>
+              <ul>
+                {neighbors.map((neighbor) => (
+                  <li key={neighbor}>
+
+                    <Link to={`/countries/${neighbor}`}>{neighbor}</Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </Col>
