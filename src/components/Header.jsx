@@ -9,10 +9,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-
 const Header = () => {
   const [user] = useAuthState(auth);
-
   const [name, setName] = useState(null);
 
   useEffect(() => {
@@ -29,8 +27,6 @@ const Header = () => {
     }
   }, [user]);
 
-  console.log("user", user);
-
   if (!user) {
     return (
       <Container fluid>
@@ -43,10 +39,9 @@ const Header = () => {
                   <Link to="/">
                     <Button variant="contained">Home</Button>
                   </Link>
-                  <Link to="/register" >
+                  <Link to="/register">
                     <Button variant="contained">Register</Button>
                   </Link>
-
                   <Link to="/login">
                     <Button variant="contained">Login</Button>
                   </Link>
@@ -61,32 +56,43 @@ const Header = () => {
     return (
       <Container fluid>
         <Row>
-          <Navbar bg="light" variant="light">
+          <Navbar
+            style={{ backgroundColor: '#123456', color: '#ffffff', padding: '1rem 0' }}
+            expand="md"
+          >
             <Container className="justify-content-end">
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav>
-
+                <Nav className="me-auto">
                   <Link to="/countries">
-                    <Button variant="contained">Countries</Button>
+                    <Button variant="contained" style={{ color: '#ffffff' }}>
+                      Countries
+                    </Button>
                   </Link>
                   <Link to="/favourites">
-                    <Button variant="contained">Favourites</Button>
+                    <Button variant="contained" style={{ color: '#ffffff' }}>
+                      Favourites
+                    </Button>
                   </Link>
-                  <Button variant="primary" onClick={logout}>Logout</Button>
-
-                  <Navbar.Text>{name}</Navbar.Text>
-
-
                 </Nav>
-
+                <Nav>
+                  <Button variant="primary" onClick={logout}>
+                    Logout
+                  </Button>
+                  <Navbar.Text
+                    variant="contained"
+                    style={{ color: '#ffffff', marginLeft: '1rem' }}
+                  >
+                    {`Welcome ${name}`}
+                  </Navbar.Text>
+                </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Row>
-      </Container >
+      </Container>
     );
   }
-}
+};
 
 export default Header;

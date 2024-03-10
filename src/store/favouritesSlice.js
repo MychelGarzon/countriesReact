@@ -15,6 +15,7 @@ export const favouritesSlice = createSlice({
         getFavourites(state, action) {
             state.favourites = action.payload;
         },
+
         addFavourite(state, action) {
             if (state.favourites.some((fav) => fav === action.payload))
                 state.favourites = [...state.favourites];
@@ -43,6 +44,8 @@ export const favouritesSlice = createSlice({
                 clearFavouritesFromFirebase(user.uid);
             }
         },
+
+
     },
 });
 

@@ -1,5 +1,3 @@
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -9,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavouritesFromSource } from "../auth/firebase";
 import { initializeCountries } from "../store/countriesSlice";
-import { addFavourite, removeFavourite } from "../store/favouritesSlice";
+import { removeFavourite } from "../store/favouritesSlice";
 import { Link } from "react-router-dom";
 
 const Favourites = () => {
@@ -37,17 +35,7 @@ const Favourites = () => {
                 {countriesList.map((country) => (
                     <Col key={country.name.official} className="mt-5">
                         <Card className="h-100">
-                            {favourites.some(
-                                (favourite) => favourite === country.name?.common
-                            ) ? (
-                                <FavoriteBorderIcon
-                                    onClick={() => dispatch(removeFavourite(country.name.common))}
-                                />
-                            ) : (
-                                <FavoriteIcon
-                                    onClick={() => dispatch(addFavourite(country.name.common))}
-                                />
-                            )}
+
                             <Link
                                 to={`/countries/${country.name.common}`}
                                 state={{ country: country }}
@@ -57,7 +45,6 @@ const Favourites = () => {
                                     src={country.flags.svg}
                                     className="rounded h-50"
                                     style={{
-                                        objectFit: "cover",
                                         minHeight: "200px",
                                         maxHeight: "200px",
                                     }}
@@ -86,17 +73,13 @@ const Favourites = () => {
                                         {country.population.toLocaleString()}
                                     </ListGroup.Item>
                                     <button
-                                        onClick={() => dispatch(removeFavourite(country))}
+                                        onClick={() => dispatch(removeFavourite(country.name.common))}
                                         className="btn btn-danger mt-2"
                                     >
                                         Remove
                                     </button>
 
-                                    <button
-                                        onClick={() => dispatch(addFavourite(country))}
-                                        className="btn btn-danger mt-2"
-                                    >Remove All
-                                    </button>
+
                                 </ListGroup>
                             </Card.Body>
                         </Card>

@@ -72,17 +72,10 @@ const CountriesSingle = () => {
 
     <Container>
       <Row className="m-5">
-        <Col>
-          {" "}
-          <Image
-            thumbnail
-            src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
-          />
-          <Image src={country.flags.png} />
 
-        </Col>
         <Col>
-          <h2 className="display-4">{country.name.common}</h2>
+          <h2 className="display-4"><Image src={country.flags.png} style={{ borderRadius: '50%', width: "5rem", height: "5rem", marginRight: '1rem' }} />{country.name.common}</h2>
+
           <h3>Capital {country.capital}</h3>
           {!error && weather && (
             <div>
@@ -110,14 +103,23 @@ const CountriesSingle = () => {
               </ul>
             </div>
           )}
+          <Col>
+            <Button variant="primary" onClick={() => navigate("/countries")}>
+              Back to Countries
+            </Button>
+          </Col>
         </Col>
+        <Col>
+          {" "}
+          <Image
+            thumbnail
+            src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
+          />
+        </Col>
+
       </Row>
       <Row>
-        <Col>
-          <Button variant="primary" onClick={() => navigate("/countries")}>
-            Back to Countries
-          </Button>
-        </Col>
+
       </Row>
     </Container>
   );
