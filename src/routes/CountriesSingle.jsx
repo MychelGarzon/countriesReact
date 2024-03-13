@@ -1,8 +1,9 @@
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
-import * as tt from '@tomtom-international/web-sdk-maps';
+import Map from "../components/Map";
 
 
 const CountriesSingle = () => {
@@ -14,8 +15,10 @@ const CountriesSingle = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [neighbors, setNeighbors] = useState([]);
-  const [mapLoaded, setMapLoaded] = useState(false);
-  const [mapContainer, setMapContainer] = useState(null);
+  const [latlng, setLatlng] = useState([]);
+
+
+
 
 
   useEffect(() => {
@@ -34,6 +37,7 @@ const CountriesSingle = () => {
       });
   }
     , [country.capital]);
+
 
   useEffect(() => {
     const fetchNeighbors = async () => {
@@ -56,46 +60,20 @@ const CountriesSingle = () => {
     fetchNeighbors();
   }, [country?.borders]);
 
+
+
   useEffect(() => {
     const fetchDataMap = async () => {
-      try {
-        const response = await axios.get(
-          `https://restcountries.com/v3.1/name/${country.name.common}`
-        );
-        const countryData = response.data[0];
-
-        // Check if mapContainer exists before proceeding
-        if (mapContainer) {
-          // Initialize the map
-          const map = tt.map({
-            key: 'AXCunYmAUmnmYu2URYfxFCWhCttAF6or',
-            container: mapContainer,
-            center: [countryData.latlng[1], countryData.latlng[0]],
-            zoom: 3,
-          });
-
-          // Update the mapLoaded state once the map is loaded
-          map.on('load', () => {
-            new tt.Marker().setLngLat([countryData.latlng[1], countryData.latlng[0]]).addTo(map);
-            setMapLoaded(true);
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching country data:", error);
-      }
+      const response = await axios.get(
+        `https://restcountries.com/v3.1/name/${country.name.common}`
+      );
+      const countryData = response.data[0];
+      setLatlng(countryData.latlng);
     };
 
     fetchDataMap();
-  }, [country.name.common, mapContainer]);
+  }, [country.name.common]);
 
-  useEffect(() => {
-    const newMapContainer = document.createElement('div');
-    newMapContainer.id = 'map';
-    newMapContainer.style.height = '400px';
-    newMapContainer.style.width = '100rem';
-
-    setMapContainer(newMapContainer);
-  }, []);
 
 
   if (loading) {
@@ -155,13 +133,10 @@ const CountriesSingle = () => {
             thumbnail
             src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
           />
-
         </Col>
+        <Map latlng={latlng} />
       </Row>
       <Row>
-        {mapLoaded && mapContainer ? (
-          <div id="map" ref={(el) => el && el.appendChild(mapContainer)} />
-        ) : null}
       </Row>
 
     </Container>
