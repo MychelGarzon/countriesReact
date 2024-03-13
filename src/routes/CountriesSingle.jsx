@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
+import { Button, Col, Container, Image, ListGroup, Row, Spinner } from "react-bootstrap";
 import * as tt from '@tomtom-international/web-sdk-maps';
 
 
@@ -51,9 +51,7 @@ const CountriesSingle = () => {
     const fetchDataMap = async () => {
       try {
         let response
-        console.log("country", country)
         if (!country) {
-          console.log("enen")
           response = await axios.get(
             `https://restcountries.com/v3.1/name/${location.state.countryName}`
           );
@@ -93,7 +91,6 @@ const CountriesSingle = () => {
         console.error("Map container not found");
         return;
       }
-      console.log("countryData", useCountry.latlng[1], useCountry.latlng[0]);
     }
   }, [loading, useCountry]);
 
@@ -133,36 +130,40 @@ const CountriesSingle = () => {
 
                 />
               </p>
+
             </div>
           )}
           {neighbors.length > 0 && (
             <div>
               <h3>Bordering Countries</h3>
-              <ul>
+              <ListGroup >
                 {neighbors.map((neighbor) => (
-                  <li key={neighbor}>
-                    <Link to={`/countries/${neighbor}`} state={{ countryName: neighbor }}>{neighbor}</Link>
-                  </li>
+                  <ListGroup key={neighbor}>
+                    <Link to={`/countries/${neighbor}`} state={{ countryName: neighbor }} style={{ color: "whitesmoke", textDecoration: 'none' }}
+                    >{neighbor}</Link>
+                  </ListGroup>
                 ))}
-              </ul>
+              </ListGroup>
             </div>
           )}
-          <Col>
-            <Button variant="primary" onClick={() => navigate("/countries")}>
-              Back to Countries
-            </Button>
-          </Col>
+
         </Col>
         <Col>
           <Image
             thumbnail
             src={`https://source.unsplash.com/featured/1600x900?${useCountry.name.common}`}
           />
+          <Col style={{ textAlign: "center", padding: "1rem" }}>
+
+            <Button variant="primary" onClick={() => navigate("/countries")}>
+              Back to Countries
+            </Button>
+          </Col>
         </Col>
       </Row>
-      <Row>
-        <div id="map"></div>
-      </Row>
+
+      <div id="map" ></div>
+
     </Container>
   );
 
