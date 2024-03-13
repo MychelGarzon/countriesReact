@@ -1,27 +1,22 @@
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
-import Map from "../components/Map";
+import * as tt from '@tomtom-international/web-sdk-maps';
 
 
 const CountriesSingle = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const country = location.state.country;
+  const country = location.state?.country;
+  const [useCountry, setCountry] = useState({})
 
   const [weather, setWeather] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [neighbors, setNeighbors] = useState([]);
-  const [latlng, setLatlng] = useState([]);
 
-
-
-
-
-  useEffect(() => {
+  function fetchCapitalData(country) {
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=602d3bd7e1f235b3cc4bbc00f1e602b8
@@ -33,48 +28,86 @@ const CountriesSingle = () => {
       })
       .then((res) => {
         setWeather(res.data);
-        setLoading(false);
       });
   }
-    , [country.capital]);
 
-
-  useEffect(() => {
-    const fetchNeighbors = async () => {
-      if (country?.borders?.length) {
-        try {
-          const response = await axios.get(
-            `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(",")}`
-          );
-          const countries = response.data;
-          setNeighbors(
-            countries.map((neighbor) => neighbor.name.common)
-          );
-        } catch (error) {
-          console.log(error);
-
-        }
+  const fetchNeighbors = async (country) => {
+    if (country?.borders?.length) {
+      try {
+        const response = await axios.get(
+          `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(",")}`
+        );
+        const countries = response.data;
+        setNeighbors(
+          countries.map((neighbor) => neighbor.name.common)
+        );
+      } catch (error) {
+        console.log(error);
       }
-    };
-
-    fetchNeighbors();
-  }, [country?.borders]);
-
-
+    }
+  };
 
   useEffect(() => {
     const fetchDataMap = async () => {
-      const response = await axios.get(
-        `https://restcountries.com/v3.1/name/${country.name.common}`
-      );
-      const countryData = response.data[0];
-      setLatlng(countryData.latlng);
+      try {
+        let response
+        console.log("country", country)
+        if (!country) {
+          console.log("enen")
+          response = await axios.get(
+            `https://restcountries.com/v3.1/name/${location.state.countryName}`
+          );
+        }
+
+
+        setCountry(country || response.data[0])
+
+        setLoading(false);
+        /*
+*/
+
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      }
     };
 
     fetchDataMap();
-  }, [country.name.common]);
+  }, [location.state]);
+
+  useEffect(() => {
+    if (!loading) {
+      console.log("no loading")
 
 
+      fetchNeighbors(useCountry);
+      fetchCapitalData(useCountry);
+
+      const mapContainer = document.getElementById('map');
+
+      if (mapContainer) {
+        console.log('entroooo')
+        mapContainer.style.width = '100%';
+        mapContainer.style.height = '400px';
+
+        let map = tt.map({
+          key: 'AXCunYmAUmnmYu2URYfxFCWhCttAF6or',
+          container: mapContainer,
+          center: [useCountry.latlng[1], useCountry.latlng[0]],
+          zoom: 3,
+        });
+
+        map.on('load', () => {
+          new tt.Marker().setLngLat([useCountry.latlng[1], useCountry.latlng[0]]).addTo(map);
+        });
+      } else {
+        console.error("Map container not found");
+        return;
+      }
+      console.log("countryData", useCountry.latlng[1], useCountry.latlng[0]);
+    }
+  }, [loading, useCountry]);
+
+  console.log("weather", weather);
 
   if (loading) {
     return (
@@ -90,18 +123,20 @@ const CountriesSingle = () => {
       </Col>
     );
   }
+
   return (
     <Container>
       <Row className="m-5">
-        <Col>
-          <h2 className="display-4"><Image src={country.flags.png} style={{ borderRadius: '50%', width: "5rem", height: "5rem", marginRight: '1rem' }} />{country.name.common}</h2>
 
-          <h3>Capital {country.capital}</h3>
+        <Col>
+          <h2 className="display-4"><Image src={useCountry.flags.png} style={{ borderRadius: '50%', width: "5rem", height: "5rem", marginRight: '1rem' }} />{useCountry.name.common}</h2>
+
+          <h3>Capital {useCountry.capital}</h3>
           {!error && weather && (
             <div>
               <p>
                 Right now it is <strong>{weather.main.temp}</strong>{" "}
-                degrees in {country.capital} and{" "}
+                degrees in {useCountry.capital} and{" "}
                 {weather.weather[0].description}
               </p>
               <img
@@ -116,7 +151,7 @@ const CountriesSingle = () => {
               <ul>
                 {neighbors.map((neighbor) => (
                   <li key={neighbor}>
-                    <Link to={`/countries/${neighbor}`}>{neighbor}</Link>
+                    <Link to={`/countries/${neighbor}`} state={{ countryName: neighbor }}>{neighbor}</Link>
                   </li>
                 ))}
               </ul>
@@ -131,20 +166,18 @@ const CountriesSingle = () => {
         <Col>
           <Image
             thumbnail
-            src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
+            src={`https://source.unsplash.com/featured/1600x900?${useCountry.name.common}`}
+
           />
+
         </Col>
-        <Map latlng={latlng} />
       </Row>
       <Row>
+        <div id="map"></div>
       </Row>
-
     </Container>
   );
 
 };
 
-
 export default CountriesSingle;
-
-
