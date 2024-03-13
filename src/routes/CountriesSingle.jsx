@@ -58,13 +58,8 @@ const CountriesSingle = () => {
             `https://restcountries.com/v3.1/name/${location.state.countryName}`
           );
         }
-
-
         setCountry(country || response.data[0])
-
         setLoading(false);
-
-
       } catch (error) {
         console.error("Error fetching country data:", error);
       }
@@ -75,9 +70,6 @@ const CountriesSingle = () => {
 
   useEffect(() => {
     if (!loading) {
-      console.log("no loading")
-
-
       fetchNeighbors(useCountry);
       fetchCapitalData(useCountry);
 
@@ -135,11 +127,12 @@ const CountriesSingle = () => {
                 Right now it is <strong>{weather.main.temp}</strong>{" "}
                 degrees in {useCountry.capital} and{" "}
                 {weather.weather[0].description}
+                <img
+                  src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt={weather.weather[0].description}
+
+                />
               </p>
-              <img
-                src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                alt={weather.weather[0].description}
-              />
             </div>
           )}
           {neighbors.length > 0 && (
