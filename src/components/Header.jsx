@@ -31,26 +31,29 @@ const Header = () => {
     return (
       <Container fluid>
         <Row>
-          <Navbar bg="light" variant="light">
+          <Navbar
+            style={{ backgroundColor: '#123456', color: '#ffffff', padding: '1rem 0' }}
+            expand="md"
+          >
             <Container className="justify-content-end">
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
                   <Link to="/">
-                    <Button variant="contained">Home</Button>
+                    <Button variant="contained" style={{ color: '#ffffff' }}>Home</Button>
                   </Link>
                   <Link to="/register">
-                    <Button variant="contained">Register</Button>
+                    <Button variant="contained" style={{ color: '#ffffff' }}>Register</Button>
                   </Link>
                   <Link to="/login">
-                    <Button variant="contained">Login</Button>
+                    <Button vvariant="contained" style={{ color: '#ffffff' }}>Login</Button>
                   </Link>
                 </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Row>
-      </Container>
+      </Container >
     );
   } else {
     return (

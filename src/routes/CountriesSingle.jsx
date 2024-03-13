@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Image, Row, Spinner } from "react-bootstrap";
+import * as tt from '@tomtom-international/web-sdk-maps';
+
 
 const CountriesSingle = () => {
   const location = useLocation();
@@ -12,8 +14,9 @@ const CountriesSingle = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [neighbors, setNeighbors] = useState([]);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapContainer, setMapContainer] = useState(null);
 
-  console.log("country", country);
 
   useEffect(() => {
     axios
@@ -31,6 +34,7 @@ const CountriesSingle = () => {
       });
   }
     , [country.capital]);
+
   useEffect(() => {
     const fetchNeighbors = async () => {
       if (country?.borders?.length) {
@@ -44,6 +48,7 @@ const CountriesSingle = () => {
           );
         } catch (error) {
           console.log(error);
+
         }
       }
     };
@@ -51,8 +56,48 @@ const CountriesSingle = () => {
     fetchNeighbors();
   }, [country?.borders]);
 
+  useEffect(() => {
+    const fetchDataMap = async () => {
+      try {
+        const response = await axios.get(
+          `https://restcountries.com/v3.1/name/${country.name.common}`
+        );
+        const countryData = response.data[0];
 
-  console.log("weather", weather);
+        // Check if mapContainer exists before proceeding
+        if (mapContainer) {
+          // Initialize the map
+          const map = tt.map({
+            key: 'AXCunYmAUmnmYu2URYfxFCWhCttAF6or',
+            container: mapContainer,
+            center: [countryData.latlng[1], countryData.latlng[0]],
+            zoom: 3,
+          });
+
+          // Update the mapLoaded state once the map is loaded
+          map.on('load', () => {
+            new tt.Marker().setLngLat([countryData.latlng[1], countryData.latlng[0]]).addTo(map);
+            setMapLoaded(true);
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      }
+    };
+
+    fetchDataMap();
+  }, [country.name.common, mapContainer]);
+
+  useEffect(() => {
+    const newMapContainer = document.createElement('div');
+    newMapContainer.id = 'map';
+    newMapContainer.style.height = '400px';
+    newMapContainer.style.width = '100rem';
+
+    setMapContainer(newMapContainer);
+  }, []);
+
+
   if (loading) {
     return (
       <Col className="text-center m-5">
@@ -67,12 +112,9 @@ const CountriesSingle = () => {
       </Col>
     );
   }
-
   return (
-
     <Container>
       <Row className="m-5">
-
         <Col>
           <h2 className="display-4"><Image src={country.flags.png} style={{ borderRadius: '50%', width: "5rem", height: "5rem", marginRight: '1rem' }} />{country.name.common}</h2>
 
@@ -96,7 +138,6 @@ const CountriesSingle = () => {
               <ul>
                 {neighbors.map((neighbor) => (
                   <li key={neighbor}>
-
                     <Link to={`/countries/${neighbor}`}>{neighbor}</Link>
                   </li>
                 ))}
@@ -110,20 +151,25 @@ const CountriesSingle = () => {
           </Col>
         </Col>
         <Col>
-          {" "}
           <Image
             thumbnail
             src={`https://source.unsplash.com/featured/1600x900?${country.name.common}`}
           />
-        </Col>
 
+        </Col>
       </Row>
       <Row>
-
+        {mapLoaded && mapContainer ? (
+          <div id="map" ref={(el) => el && el.appendChild(mapContainer)} />
+        ) : null}
       </Row>
+
     </Container>
   );
 
 };
 
+
 export default CountriesSingle;
+
+
