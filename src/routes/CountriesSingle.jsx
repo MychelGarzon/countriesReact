@@ -63,8 +63,7 @@ const CountriesSingle = () => {
         setCountry(country || response.data[0])
 
         setLoading(false);
-        /*
-*/
+
 
       } catch (error) {
         console.error("Error fetching country data:", error);
@@ -85,12 +84,11 @@ const CountriesSingle = () => {
       const mapContainer = document.getElementById('map');
 
       if (mapContainer) {
-        console.log('entroooo')
         mapContainer.style.width = '100%';
         mapContainer.style.height = '400px';
 
         let map = tt.map({
-          key: 'AXCunYmAUmnmYu2URYfxFCWhCttAF6or',
+          key: import.meta.env.VITE_TOMTOM_API,
           container: mapContainer,
           center: [useCountry.latlng[1], useCountry.latlng[0]],
           zoom: 3,
@@ -107,7 +105,6 @@ const CountriesSingle = () => {
     }
   }, [loading, useCountry]);
 
-  console.log("weather", weather);
 
   if (loading) {
     return (
@@ -167,9 +164,7 @@ const CountriesSingle = () => {
           <Image
             thumbnail
             src={`https://source.unsplash.com/featured/1600x900?${useCountry.name.common}`}
-
           />
-
         </Col>
       </Row>
       <Row>
