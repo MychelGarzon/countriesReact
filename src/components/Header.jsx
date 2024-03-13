@@ -46,7 +46,7 @@ const Header = () => {
                     <Button variant="contained" style={{ color: '#ffffff' }}>Register</Button>
                   </Link>
                   <Link to="/login">
-                    <Button vvariant="contained" style={{ color: '#ffffff' }}>Login</Button>
+                    <Button variant="contained" style={{ color: '#ffffff' }}>Login</Button>
                   </Link>
                 </Nav>
               </Navbar.Collapse>

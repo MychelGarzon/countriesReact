@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, loginWithEmailAndPassword } from '../auth/firebase';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,17 +21,30 @@ const Login = () => {
     useEffect(() => {
         if (loading) return;
         if (user) {
-            console.log(user);
             navigate('/countries');
         }
     }, [user, loading, navigate]);
 
     return (
-        <div>
-            <h1>Login</h1>
-            <input type="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)} />
-            <Button onClick={login}>Login</Button>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', zIndex: 1 }}>
+
+            <Form style={{ backgroundColor: "whitesmoke", textAlign: "center", width: "20rem", padding: "2rem", borderRadius: "10px" }}>
+                <Form.Group className="mb-3" >
+                    <Form.Label><h3>Email</h3></Form.Label>
+                    <Form.Control
+                        type="email" value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label><h3>Password</h3></Form.Label>
+                    <Form.Control
+                        type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+                <Button onClick={login}>Login</Button>
+            </Form>
+
         </div>
     )
 }

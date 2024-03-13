@@ -5,7 +5,6 @@ import { Col, Spinner } from "react-bootstrap";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const [user, loading] = useAuthState(auth);
-    console.log("user: ", user);
 
     if (loading) {
         return <Col className="text-center m-5">
