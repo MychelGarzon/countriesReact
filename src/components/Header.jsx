@@ -8,6 +8,7 @@ import { auth, db, logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import logo from "../assets/earth.png";
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -30,11 +31,19 @@ const Header = () => {
   if (!user) {
     return (
       <Container fluid>
+
         <Row>
           <Navbar
             style={{ backgroundColor: '#123456', color: '#ffffff', padding: '1rem 0' }}
             expand="md"
           >
+            <img
+              className="img-thumbnail mx-auto d-block mb-2"
+              style={{ width: "5rem", height: "5rem", backgroundColor: '#123456' }}
+
+              src={logo}
+              alt="logo"
+            />
             <Container className="justify-content-end">
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">

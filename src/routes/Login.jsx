@@ -3,6 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, loginWithEmailAndPassword } from '../auth/firebase';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
+import logo from "../assets/earth.png";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -29,6 +30,13 @@ const Login = () => {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', zIndex: 1 }}>
 
             <Form style={{ backgroundColor: "whitesmoke", textAlign: "center", width: "20rem", padding: "2rem", borderRadius: "10px" }}>
+                <img
+                    className="img-thumbnail mx-auto d-block mb-2"
+                    style={{ width: "5rem", height: "5rem" }}
+
+                    src={logo}
+                    alt="logo"
+                />
                 <Form.Group className="mb-3" >
                     <Form.Label><h3>Email</h3></Form.Label>
                     <Form.Control
