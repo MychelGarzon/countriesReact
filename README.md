@@ -1,3 +1,5 @@
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=MychelGarzon_countriesReact&metric=bugs)](https://sonarcloud.io/summary/new_code?id=MychelGarzon_countriesReact)
+
 # Countries App
 
 This is a country app that displays countries information, including their flag, name, official name, languages, currency, and population.
