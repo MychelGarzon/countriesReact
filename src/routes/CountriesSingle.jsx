@@ -136,10 +136,11 @@ const CountriesSingle = () => {
           {neighbors.length > 0 && (
             <div>
               <h3>Bordering Countries</h3>
+              <p style={{ fontStyle: 'italic' }}>Click on the countrys name to see more information</p>
               <ListGroup >
                 {neighbors.map((neighbor) => (
                   <ListGroup key={neighbor}>
-                    <Link to={`/countries/${neighbor}`} state={{ countryName: neighbor }} style={{ color: "whitesmoke", textDecoration: 'none' }}
+                    <Link to={`/countries/${neighbor}`} state={{ countryName: neighbor }} style={{ color: "black", textDecoration: 'none' }}
                     >{neighbor}</Link>
                   </ListGroup>
                 ))}
