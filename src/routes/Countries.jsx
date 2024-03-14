@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Form, Spinner } from "react-bootstrap";
+import { CardText, Form, Spinner } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -68,7 +68,7 @@ const Countries = () => {
 
   return (
     <Container fluid>
-      <Row className="mb-3">
+      <Row className="mb-3 justify-content-center">
         <Form.Control
           style={{ width: "18rem" }}
           type="search"
@@ -88,6 +88,7 @@ const Countries = () => {
             </option>
           ))}
         </Form.Select>
+
       </Row>
       <Row xs={1} md={3} lg={5} className="g-3">
         {sortedCountries.map((country) => (
@@ -111,6 +112,7 @@ const Countries = () => {
                 />
               </Link>
               <Card.Body className="d-flex flex-column">
+                <CardText style={{ fontStyle: "italic" }}><p>Click flag for info</p></CardText>
                 <Card.Title>{country.name.common}</Card.Title>
                 <Card.Subtitle className="mb-5 text-muted">
                   {country.name.official}

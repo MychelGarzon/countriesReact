@@ -123,8 +123,8 @@ const CountriesSingle = () => {
           {!error && weather && (
             <div>
               <p>
-                Right now it is <strong>{weather.main.temp}</strong>{" "}
-                degrees in {useCountry.capital} and{" "}
+                {useCountry.capital} is <strong>{weather.main.temp}</strong>{" "}
+                °C {" "} with {" "}
                 {weather.weather[0].description}
                 <img
                   src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
