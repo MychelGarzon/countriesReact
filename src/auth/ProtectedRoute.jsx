@@ -21,6 +21,11 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         <Navigate to="/login" replace />;
 };
 
+import PropTypes from 'prop-types';
+
+ProtectedRoute.propTypes = {
+    component: PropTypes.elementType.isRequired,
+};
 
 
 export default ProtectedRoute;
