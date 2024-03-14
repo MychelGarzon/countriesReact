@@ -18,8 +18,17 @@ This app uses Firebase for user authentication and to store users favorite count
 
 ## Instructions
 
-- Install dependencies `npm install`
-- Run `npm run dev`
+- Install dependencies, use the following command
+
+```npm
+npm install
+```
+
+- To run the app, use the following command:
+
+```
+npm run dev
+```
 
 ## Data
 
