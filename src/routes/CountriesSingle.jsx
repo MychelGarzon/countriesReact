@@ -102,7 +102,7 @@ const CountriesSingle = () => {
       <Col className="text-center m-5">
         <Spinner
           animation="border"
-          role="status"
+          role="outpout"
           className="center"
           variant="info"
         >

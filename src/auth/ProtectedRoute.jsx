@@ -9,7 +9,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 
     if (loading) {
         return <Col className="text-center m-5">
-            <Spinner animation="border" role="status" className="center" variant="info">
+            <Spinner animation="border" role="outpout" className="center" variant="info">
                 <span className="visually-hidden">Loading...</span>
             </Spinner>
         </Col>;
