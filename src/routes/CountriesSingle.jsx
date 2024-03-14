@@ -20,8 +20,7 @@ const CountriesSingle = () => {
   function fetchCapitalData(country) {
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=602d3bd7e1f235b3cc4bbc00f1e602b8
-        `
+        `https://api.openweathermap.org/data/2.5/weather?q=${country.capital}&units=metric&appid=${import.meta.env.VITE_OPENWATHER_API}`
       )
       .catch((error) => {
         console.log(error);
