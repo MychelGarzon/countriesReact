@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Container, Image, ListGroup, Row, Spinner } from "react-bootstrap";
 import * as tt from '@tomtom-international/web-sdk-maps';
 
-
+// The CountriesSingle component is a functional component that uses the useLocation and useNavigate hooks from react-router-dom to access the location and navigate to other routes. It also uses the useState and useEffect hooks from React to manage the component's state and side effects.
 const CountriesSingle = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ const CountriesSingle = () => {
   const [loading, setLoading] = useState(true);
   const [neighbors, setNeighbors] = useState([]);
 
+  // The fetchCapitalData function is an asynchronous function that takes a country as a parameter and fetches the weather data for the country's capital using the OpenWeatherMap API. It then sets the weather state with the response data.
   function fetchCapitalData(country) {
     axios
       .get(
@@ -30,7 +31,7 @@ const CountriesSingle = () => {
         setWeather(res.data);
       });
   }
-
+  // The fetchNeighbors function is an asynchronous function that takes a country as a parameter and fetches the neighboring countries using the Rest Countries API. It then sets the neighbors state with the response data.
   const fetchNeighbors = async (country) => {
     if (country?.borders?.length) {
       try {
@@ -46,7 +47,7 @@ const CountriesSingle = () => {
       }
     }
   };
-
+  // The useEffect hook is used to fetch the country data when the component mounts. It uses the location state to fetch the country data if it exists, otherwise it fetches the country data using the Rest Countries API. It then sets the country state with the response data and sets the loading state to false.
   useEffect(() => {
     const fetchDataMap = async () => {
       try {
@@ -66,6 +67,7 @@ const CountriesSingle = () => {
     fetchDataMap();
   }, [location.state]);
 
+  // The useEffect hook is used to fetch the neighboring countries and the weather data when the component mounts. It also creates a map using the TomTom Maps SDK and sets the map container's width and height. It then sets the map's center and zoom level, and adds a marker to the map at the country's coordinates.
   useEffect(() => {
     if (!loading) {
       fetchNeighbors(useCountry);
