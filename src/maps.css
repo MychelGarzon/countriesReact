@@ -1,1 +1,4 @@
 @import '@tomtom-international/web-sdk-maps';
+#map {
+  margin-top: 20px;
+}

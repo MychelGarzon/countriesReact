@@ -13,6 +13,7 @@ import { getFavouritesFromSource } from "../auth/firebase";
 import { initializeCountries } from "../store/countriesSlice";
 import { addFavourite, removeFavourite } from "../store/favouritesSlice";
 
+// The Countries component is a list of countries that displays the country's flag, name, official name, languages, currency, and population.
 const Countries = () => {
   const dispatch = useDispatch();
   const countriesList = useSelector((state) => state.countries.countries);
@@ -41,6 +42,7 @@ const Countries = () => {
     );
   }
 
+  // Filter the countries based on the search input.
   const filteredCountries = countriesList
     .filter((country) =>
       country.name.common.toLowerCase().includes(search.toLowerCase())
@@ -50,7 +52,7 @@ const Countries = () => {
         ? true
         : country.region === selectedContinent
     );
-
+  // The continentOptions array contains the options for the continent select input.
   const continentOptions = [
     { value: "All", label: "All countries" },
     { value: "Africa", label: "Africa" },
@@ -59,6 +61,7 @@ const Countries = () => {
     { value: "Europe", label: "Europe" },
     { value: "Oceania", label: "Oceania" },
   ];
+  // Sort the countries alphabetically by their common name.
   const sortedCountries = filteredCountries.sort((a, b) =>
     a.name.common.localeCompare(b.name.common)
   );

@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import logo from "../assets/earth.png";
 
+// The Login component is a form that allows the user to log in to the application.
+// The login function is an asynchronous function that uses the loginWithEmailAndPassword function from the firebase.js file to log in the user.
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
+
 
     const login = async () => {
         try {
@@ -18,7 +22,6 @@ const Login = () => {
             console.error(error);
         }
     }
-
     useEffect(() => {
         if (loading) return;
         if (user) {
@@ -51,6 +54,7 @@ const Login = () => {
                     />
                 </Form.Group>
                 <Button onClick={login}>Login</Button>
+
             </Form>
 
         </div>

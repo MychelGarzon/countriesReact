@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import logo from "../assets/earth.png";
 
+// The Header component is a navigation bar that displays the application's logo and links to the home, register, login, countries, and favourites pages.
 const Header = () => {
   const [user] = useAuthState(auth);
   const [name, setName] = useState(null);

@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { auth } from "../auth/firebase";
 import { Col, Spinner } from "react-bootstrap";
 
+// The ProtectedRoute component is a wrapper around the Route component from react-router-dom.
 const ProtectedRoute = ({ component: Component, ...rest }) => {
     const [user, loading] = useAuthState(auth);
 

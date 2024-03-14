@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { auth, registerWithEmailAndPassword } from "../auth/firebase";
 import logo from "../assets/earth.png";
 
-
+// The Register component is a form that allows the user to register for the application.
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

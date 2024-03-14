@@ -10,6 +10,7 @@ import { initializeCountries } from "../store/countriesSlice";
 import { removeFavourite } from "../store/favouritesSlice";
 import { Link } from "react-router-dom";
 
+//  The Favourites component is a list of the user's favourite countries that displays the country's flag, name, official name, languages, currency, and population.
 const Favourites = () => {
     const dispatch = useDispatch();
 
