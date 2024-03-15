@@ -12,9 +12,7 @@ describe("countriesSlice tests", () => {
                 countries: countriesSlice
             }
         })
-
-    });
-
+    })
     it("should initialize countries in the store", () => {
         const { countries, isLoading } = store.getState().countries;
         expect(countries).toHaveLength(0);
@@ -22,10 +20,13 @@ describe("countriesSlice tests", () => {
     });
     it("should handle countries", () => {
         store.dispatch({
-            type: "countries",
+            type: "countries/getCountries",
             payload: ["country 1", "country 2"]
         });
-        expect(store.getState().countries.countries).toEqual(["country 1", "country 2"]);
+        expect(store.getState().countries.countries).toEqual([
+            "country 1",
+            "country 2"
+        ]);
         expect(store.getState().countries.isLoading).toEqual(false);
     });
     it("should handle initialCountries", async () => {
