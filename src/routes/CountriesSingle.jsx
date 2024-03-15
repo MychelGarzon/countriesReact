@@ -114,10 +114,8 @@ const CountriesSingle = () => {
   return (
     <Container>
       <Row className="m-5">
-
         <Col>
           <h2 className="display-4"><Image src={useCountry.flags.png} style={{ borderRadius: '50%', width: "5rem", height: "5rem", marginRight: '1rem' }} />{useCountry.name.common}</h2>
-
           <h3>Capital {useCountry.capital}</h3>
           {!error && weather && (
             <div>
@@ -146,25 +144,27 @@ const CountriesSingle = () => {
                   </ListGroup>
                 ))}
               </ListGroup>
+
             </div>
           )}
-
+          <Button variant="primary" onClick={() => navigate("/countries")}>
+            Back to Countries
+          </Button>
         </Col>
         <Col>
-          <Image
-            thumbnail
-            src={`https://source.unsplash.com/featured/1600x900?${useCountry.name.common}`}
-          />
           <Col style={{ textAlign: "center", padding: "1rem" }}>
+            <div id="map" ></div>
 
-            <Button variant="primary" onClick={() => navigate("/countries")}>
-              Back to Countries
-            </Button>
+            <Image
+              thumbnail
+              src={`https://source.unsplash.com/featured/1600x900?${useCountry.name.common}`}
+            />
+
           </Col>
         </Col>
       </Row>
 
-      <div id="map" ></div>
+
 
     </Container>
   );
