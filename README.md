@@ -52,3 +52,7 @@ The project aimed to develop a React application and learn state management usin
 - Vite
 - Firebase
 - React-bootstrap
+
+## Live Link
+
+[Countries](https://countries-react-mg.netlify.app/)

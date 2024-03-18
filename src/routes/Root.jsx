@@ -8,5 +8,4 @@ function Root() {
         <Outlet />
     </div>);
 }
-
 export default Root;
