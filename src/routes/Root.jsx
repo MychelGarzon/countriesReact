@@ -5,8 +5,6 @@ import Header from "../components/Header";
 function Root() {
     return (<div>
         <Header />
-        <h1>Home</h1>
-
         <Outlet />
     </div>);
 }

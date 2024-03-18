@@ -13,7 +13,6 @@ const Home = () => {
           <img
             className="img-thumbnail mx-auto d-block mb-2"
             style={{ width: "5rem", height: "5rem" }}
-
             src={logo}
             alt="logo"
           />
@@ -33,10 +32,6 @@ const Home = () => {
         </Form>
 
       </div>
-      <video autoPlay style={{ width: '100%', maxWidth: '100vw', position: 'absolute', zIndex: 0 }}>
-        <source src="/earthVideo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
     </div >
   );
 };

@@ -50,7 +50,7 @@ const Login = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label><h3>Password</h3></Form.Label>
                     <Form.Control
-                        type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}
+                        data-id="password-login" type="password" value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
                 <Button data-id="login-button" onClick={login}>Login</Button>
