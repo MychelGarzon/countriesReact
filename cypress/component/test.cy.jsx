@@ -1,6 +1,8 @@
 describe('test.cy.jsx', () => {
-  it('playground passes', () => {
-    // cy.mount()
+  beforeEach(() => {
+    cy.visit('http://localhost:5173/')
+
 
   })
 })
+

@@ -85,7 +85,7 @@ const Header = () => {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <Link to="/countries">
-                    <Button variant="contained" style={{ color: '#ffffff' }}>
+                    <Button data-id="countries-button" variant="contained" style={{ color: '#ffffff' }}>
                       Countries
                     </Button>
                   </Link>
