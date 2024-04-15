@@ -8,12 +8,13 @@ import { auth, db, logout } from "../auth/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Avatar from "./Avatar";
 import logo from "../assets/earth.png";
 
-// The Header component is a navigation bar that displays the application's logo and links to the home, register, login, countries, and favourites pages.
 const Header = () => {
   const [user] = useAuthState(auth);
   const [name, setName] = useState(null);
+  const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -21,6 +22,7 @@ const Header = () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         setName(doc.data().name);
+        setAvatar(doc.data().avatar);
       });
     };
 
@@ -32,16 +34,14 @@ const Header = () => {
   if (!user) {
     return (
       <Container fluid>
-
         <Row>
           <Navbar
-            style={{ backgroundColor: '#123456', color: '#ffffff', padding: '1rem 0' }}
+            style={{ backgroundColor: "#123456", color: "#ffffff", padding: "1rem 0" }}
             expand="md"
           >
             <img
               className="img-thumbnail mx-auto d-block mb-2"
-              style={{ width: "5rem", height: "5rem", backgroundColor: '#123456', borderColor: '#123456' }}
-
+              style={{ width: "5rem", height: "5rem", backgroundColor: "#123456", borderColor: "#123456" }}
               src={logo}
               alt="logo"
             />
@@ -50,33 +50,38 @@ const Header = () => {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
                   <Link to="/">
-                    <Button variant="contained" style={{ color: '#ffffff' }}>Home</Button>
+                    <Button variant="contained" style={{ color: "#ffffff" }}>
+                      Home
+                    </Button>
                   </Link>
                   <Link to="/register">
-                    <Button variant="contained" style={{ color: '#ffffff' }}>Register</Button>
+                    <Button variant="contained" style={{ color: "#ffffff" }}>
+                      Register
+                    </Button>
                   </Link>
                   <Link to="/login">
-                    <Button variant="contained" style={{ color: '#ffffff' }}>Login</Button>
+                    <Button variant="contained" style={{ color: "#ffffff" }}>
+                      Login
+                    </Button>
                   </Link>
                 </Nav>
               </Navbar.Collapse>
             </Container>
           </Navbar>
         </Row>
-      </Container >
+      </Container>
     );
   } else {
     return (
       <Container fluid>
         <Row>
           <Navbar
-            style={{ backgroundColor: '#123456', color: '#ffffff', padding: '1rem 0' }}
+            style={{ backgroundColor: "#123456", color: "#ffffff", padding: "1rem 0" }}
             expand="md"
           >
             <img
               className="img-thumbnail mx-auto d-block mb-2"
-              style={{ width: "5rem", height: "5rem", backgroundColor: '#123456', borderColor: '#123456' }}
-
+              style={{ width: "5rem", height: "5rem", backgroundColor: "#123456", borderColor: "#123456" }}
               src={logo}
               alt="logo"
             />
@@ -85,12 +90,12 @@ const Header = () => {
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
                   <Link to="/countries">
-                    <Button data-id="countries-button" variant="contained" style={{ color: '#ffffff' }}>
+                    <Button data-id="countries-button" variant="contained" style={{ color: "#ffffff" }}>
                       Countries
                     </Button>
                   </Link>
                   <Link to="/favourites">
-                    <Button variant="contained" style={{ color: '#ffffff' }}>
+                    <Button variant="contained" style={{ color: "#ffffff" }}>
                       Favourites
                     </Button>
                   </Link>
@@ -101,8 +106,10 @@ const Header = () => {
                   </Button>
                   <Navbar.Text
                     variant="contained"
-                    style={{ color: '#ffffff', marginLeft: '1rem' }}
+                    style={{ color: "#ffffff", marginLeft: "1rem" }}
                   >
+                    <Avatar avatarValue={avatar} />
+
                     {`Welcome ${name}`}
                   </Navbar.Text>
                 </Nav>

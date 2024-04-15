@@ -29,6 +29,8 @@ const Login = () => {
         }
     }, [user, loading, navigate]);
 
+    async () => { try { await loginWithEmailAndPassword(email, password); analytics().logEvent('button_click', { button_name: 'login_button' }); } catch (error) { console.error(error); } }
+
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', zIndex: 1 }}>
 

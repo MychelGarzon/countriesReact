@@ -14,6 +14,7 @@ import {
     where,
 } from "firebase/firestore";
 import { getFavourites } from "../store/favouritesSlice";
+import { getAnalytics } from "firebase/analytics";
 
 // Here we initialize the app with the firebaseConfig object
 const firebaseConfig = {
@@ -22,7 +23,8 @@ const firebaseConfig = {
     projectId: "countries-f2546",
     storageBucket: "countries-f2546.appspot.com",
     messagingSenderId: "345028026141",
-    appId: "1:345028026141:web:b80a8e04e2b49787f9cbf4"
+    appId: "1:345028026141:web:b80a8e04e2b49787f9cbf4",
+    measurementId: "G-QFMMC3190L"
 };
 
 // The initializeApp function initializes the app with the firebaseConfig object.
@@ -31,7 +33,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // The registerWithEmailAndPassword function is an asynchronous function that takes the name, email, and password as parameters and creates a new user with the createUserWithEmailAndPassword function from the firebase/auth module.
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (name, email, password, avatar) => {
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         const user = res.user;
@@ -40,6 +42,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
             name,
             authProvider: "local",
             email,
+            avatar,
         });
     } catch (error) {
         console.log(error);
@@ -122,5 +125,11 @@ export const getFavouritesFromSource = () => async (dispatch) => {
         dispatch(getFavourites(favourites));
     }
 };
+export const analytics = getAnalytics(app);
 
-export { auth, db, registerWithEmailAndPassword };
+console.log("db", db);
+console.log("analytics", analytics);
+
+
+
+export { auth, db, registerWithEmailAndPassword, firebaseConfig };
