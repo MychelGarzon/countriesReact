@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 import { createAvatar } from '@dicebear/core';
 import { funEmoji } from '@dicebear/collection';
 
-// eslint-disable-next-line react/prop-types
 function Avatar({ avatarValue }) {
     const avatar = useMemo(() => {
+        if (!avatarValue) return null;
+
         return createAvatar(funEmoji, {
             size: 100,
             seed: avatarValue,

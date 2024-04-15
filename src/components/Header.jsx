@@ -108,8 +108,8 @@ const Header = () => {
                     variant="contained"
                     style={{ color: "#ffffff", marginLeft: "1rem" }}
                   >
-                    <Avatar avatarValue={avatar} />
-
+                    {/* <Avatar avatarValue={avatar} style={{ width: "32px", height: "32px", marginLeft: "1rem" }} />
+ */}
                     {`Welcome ${name}`}
                   </Navbar.Text>
                 </Nav>

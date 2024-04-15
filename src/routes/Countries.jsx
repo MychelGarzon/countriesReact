@@ -112,7 +112,7 @@ const Countries = () => {
                 />
               </Link>
               <Card.Body className="d-flex flex-column">
-                <CardText style={{ fontStyle: "italic" }}><h6>Click flag for info</h6></CardText>
+                <CardText style={{ fontStyle: "italic" }}><span>Click flag for info</span></CardText>
                 <Card.Title>{country.name.common}</Card.Title>
                 <Card.Subtitle className="mb-5 text-muted">
                   {country.name.official}
